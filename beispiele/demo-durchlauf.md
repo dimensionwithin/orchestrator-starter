@@ -12,7 +12,7 @@ Er endet mit "Deine Schritte".
     Auftrag D-1 — Rechenskript. AENDERND, mit Commit.
     MODELL: <Modell>      EFFORT: medium      ZEITSPERRE: keine
     ORCHESTRATOR: demo
-    Belegung: entfaellt
+    Belegung: keine (Uebung, ein einziger Nutzer)
     DEPLOY: kein Deploy
 
     WARUM: Kleines Skript als Uebung.

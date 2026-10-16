@@ -77,7 +77,8 @@ bauen (`--probe`: zeigt je Auftrag, ob er starten wuerde oder worauf er wartet, 
   mehreren Projekten wartet, bis alle frei sind, und niemand ueberholt ihn in diesen Projekten.
 - `Belegung: keine (<Grund>)` im Kopf: startet sofort, unabhaengig von den Reihen.
 - Fehlt die Zeile `Belegung:` oder ist sie unlesbar, geht der Auftrag nach `gescheitert\`: Unbekannt gilt als nicht
-  bestanden, nie als "frei".
+  bestanden, nie als "frei". Auch `Belegung: entfaellt` ist keine gueltige Angabe; ohne Belegung heisst die Zeile
+  `Belegung: keine (<Grund>)`.
 - Ohne Belegung (ihr setzt sie nicht ein): eine einzige Reihe nach Alter; setze dann `parallel.txt` auf `1`, wenn
   zwei Auftraege nie gleichzeitig dieselben Dateien anfassen duerfen.
 - Kennungen werden nie wiederverwendet. Wer dieselbe Kennung zweimal einreiht, bekommt die Meldung "laeuft schon".

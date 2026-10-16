@@ -5,7 +5,7 @@ Belegung: keine (Probe, schreibt nur im Berichte-Ordner)
 DEPLOY: kein Deploy
 ZEITSPERRE: <Zeitfenster, in dem er nicht laufen darf, oder: keine>
 
-So benutzt du die Vorlage: Kopie nach `<Berichte-Ordner>\auftraege\bereit\<Kennung>.md`, Kennung neu vergeben
+So benutzt du die Vorlage: Kopie nach `<Berichte-Ordner>\auftraege\<Kennung>.md` (mit Warteschlange: `auftraege\bereit\`), Kennung neu vergeben
 (Dateiname und erste Zeile gleich, nur `A-Z a-z 0-9 . _ -`), Platzhalter in `<...>` ersetzen, am Ende `tail -1`
 pruefen. Dieser Absatz darf in der Kopie bleiben oder fallen. Strang `demo` ist erfunden; nimm dein eigenes Kuerzel.
 

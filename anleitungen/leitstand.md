@@ -90,7 +90,7 @@ wie "alles erledigt".
 3. `python <Berichte-Ordner>\setup-post\marker.py demo --keine`: `demo` wandert nach "Nichts offen".
 4. Die Datei `wartet-demo.txt` entfernen (Probedatei, die du selbst angelegt hast): `demo` verschwindet oder steht unter
    "Kein Marker", nie unter "Nichts offen".
-5. Die Tests des Markers laufen im Ordner `scripts\`: `python3 -m unittest` (zwei Tests, Wegwerfordner).
+5. Die Tests des Markers laufen im Ordner `scripts\`: `python -m unittest` (Linux/macOS: `python3`; zwei Tests, Wegwerfordner).
 
 ## Rueckgaengig
 

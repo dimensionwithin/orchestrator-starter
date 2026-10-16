@@ -1,6 +1,6 @@
 {
   "name": "orchestrator-starter",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Starterpaket fuer die Arbeit mit einem Orchestrator-Chat: Skill zum Planen und Auftraege schreiben, Skript fuer neue Post, Marker-Vorlage fuer einen Leitstand, Lauflaengen-Waechter.",
   "author": { "name": "DimensionWithin" },
   "license": "MIT",

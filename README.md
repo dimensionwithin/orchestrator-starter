@@ -5,7 +5,7 @@ planen und schreiben Auftraege als Dateien, **ein Ausfuehrer** (Claude Code) arb
 Optional gibt es eine **Warteschlange**, die fertige Auftraege selbst startet, **Post** zwischen den Orchestratoren und einen
 **Leitstand**, der zeigt, welcher Chat gerade auf dich wartet.
 
-Version 0.2.2. Nichts davon ist veroeffentlicht. Autor `DimensionWithin`, Lizenz MIT (siehe LICENSE).
+Version 0.2.3. Autor `DimensionWithin`, Lizenz MIT (siehe LICENSE).
 
 ## Fuer wen
 
@@ -38,28 +38,35 @@ Zu `unbeaufsichtigt` gehoert zusaetzlich die Regel unter `skills/orchestrator-st
 
 ## Voraussetzungen
 
-- Claude Code (getestet mit 2.1.289; eine untere Grenze ist nicht bekannt).
-- Python 3 fuer `post-neu.py` und `marker.py` (nur Standardbibliothek).
+- Claude Code (getestet mit 2.1.289; eine untere Grenze ist nicht bekannt, auch nicht fuer `claude plugin configure`
+  und `claude plugin details`, die der Schnellstart benutzt).
+- Internetzugang und `git` fuer die Installation: `claude plugin marketplace add` klont das Repository per HTTPS (so meldet
+  es der Befehl). Ob die Installation auch ohne installiertes `git` geht, ist noch nicht ausprobiert.
+- Python 3 fuer `post-neu.py` und `marker.py` (nur Standardbibliothek). Aufruf unter Windows `python`, sonst `python3`.
 - Optional PowerShell 7 (`pwsh`), falls du die Belegung oder die Windows-Aufgabenplanung benutzt.
 - Teile der Warteschlange und der Aufgabenplanung sind **nur auf Windows** beschrieben; fuer Linux und macOS gibt die
   Anleitung die Alternative (cron, launchd). Skill, Post-Skript, Marker und Waechter laufen ueberall, wo Claude Code und
   Python laufen.
 
-## Installation (nur dokumentiert)
+## Installation
 
 Die Installation schreibt in deine Nutzereinstellungen. Fuehre sie selbst aus, wenn du das Paket haben willst:
 
     claude plugin marketplace add dimensionwithin/orchestrator-starter
     claude plugin install orchestrator-starter@orchestrator-starter-marketplace
 
-Den Berichte-Ordner setzt du als Plugin-Einstellung `berichte_ordner` (Typ Ordner). Weiter mit [SCHNELLSTART.md](SCHNELLSTART.md).
+Den Berichte-Ordner setzt du als Plugin-Einstellung `berichte_ordner` (Typ Ordner); wie, steht in Schritt 3 des
+Schnellstarts. Weiter mit [SCHNELLSTART.md](SCHNELLSTART.md).
 
 ## Sicherheitshinweis
 
 Der Waechter-Mod ist ein Plugin mit Funktions-Hooks und **laeuft mit deinen Nutzerrechten**. Der Quelltext liegt offen unter
 `hooks/` (`logic.ts`, `register.ts`, `waechter.test.ts`) und ist kurz; lies ihn vor der Installation. Er zeigt nur Hinweise
 an, **sendet nichts** und verbietet nichts. Die Skripte unter `scripts/` sind ebenfalls lesbar und nutzen
-nur die Python-Standardbibliothek. Schreibe nie Schluessel, Tokens oder Passwoerter in Auftraege, Berichte oder Post.
+nur die Python-Standardbibliothek. Pruefen kannst du das Paket in einem Klon des Repositories mit
+`claude plugin validate <Ordner>` (Manifest) und `claude plugin test <Ordner>` (Tests des Waechters); die Tests der
+Skripte laufen mit `python -m unittest` im Ordner `scripts/` (siehe [SCHNELLSTART.md](SCHNELLSTART.md)). Schreibe nie
+Schluessel, Tokens oder Passwoerter in Auftraege, Berichte oder Post.
 
 ## Lizenz
 
@@ -76,7 +83,8 @@ Die Zeitzone Berlin ist fest in `scripts/post-neu.py` eingebaut: Die Funktion `b
 Ortszeit, in ihr steht `ZoneInfo("Europe/Berlin")` (Zeile 44). Wer eine andere Zeitzone braucht, aendert diese eine Zeile.
 Die Rueckfallregel `berlin_regel()` (Zeile 28) gilt nur, falls `zoneinfo` fehlt, und muesste dann ebenfalls angepasst werden.
 
-## Offen
+## Bekannte Grenzen
 
-- Autor und Konto sind als Handle eingesetzt; vor einer Weitergabe nach Wunsch aendern.
-- Geheimnis-Pruefung: Geprueft am 16.10.2026.
+- Getestet wurde unter Windows. Linux und macOS sind ungetestet.
+- Die Chat-Schritte 6 bis 10 des Schnellstarts (Orchestrator-Chat, Auftrag, Ausfuehrung, Berichtspruefung) sind am Text
+  geprueft, aber noch nicht in einer angemeldeten Sitzung durchgespielt.

@@ -49,4 +49,4 @@ Gehoert zum optionalen Leitstand (Anleitung: [leitstand.md](../anleitungen/leits
     python <BERICHTE>\setup-post\marker.py <Kuerzel> --keine         nichts ist offen
 
 Das Skript schreibt `<BERICHTE>\leitstand\wartet-<Kuerzel>.txt` (Zeile 1 Zeitstempel, Zeile 2 Kurztext). Tests (zwei, Wegwerfordner):
-`python3 -m unittest` im Ordner `scripts\`.
+`python -m unittest` (Linux/macOS: `python3`) im Ordner `scripts\`.

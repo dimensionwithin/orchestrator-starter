@@ -31,7 +31,7 @@ seine Anleitung, rate nicht.
 - Dateiname `<Kennung>.md`, erste Zeile `Auftrag <Kennung> — …`, letzte nicht leere Zeile `ENDE AUFTRAG <Kennung>`.
   Nach dem Schreiben mit `tail -1` pruefen. Fehlt die letzte Zeile, scheitert der Auftrag sofort.
 - Kopf mit `MODELL:` und `EFFORT:`, dazu `ORCHESTRATOR: <Kuerzel>` fuer die Rueckmeldung. Wo euer Programm es
-  verlangt, auch die Zeile `Belegung:`.
+  verlangt, auch die Zeile `Belegung:`; ohne Belegung `Belegung: keine (<Grund>)`, nie weglassen.
 - Alles entschieden, keine Anmeldung, kein Handgriff, keine Rueckfrage. Sonst Start von Hand.
 - Der Lauf hat nur die Rechte, die der Nutzer in seinen Einstellungen vergeben hat. Brauchst du etwas anderes, schreib
   den Auftrag nicht fuer die Warteschlange, sondern gib ihn von Hand ab.
@@ -48,7 +48,7 @@ Arbeiten mehrere Sitzungen am selben Projekt, verhindert eine Belegung Kollision
 traegt sich vorher ein und am Ende nur sich selbst wieder aus. Zwei Eintraege desselben Projekts vertragen sich nur,
 wenn beide `lesen` sind; sonst wartet der spaetere. Verwaiste Eintraege loescht niemand ausser dem Nutzer. Das Muster ist
 freiwillig. Aufbau, Zeile im Auftragskopf und Ablauf: `anleitungen\belegung.md`. Setzt ihr sie nicht ein, steht im
-Kopf `Belegung: keine (<Grund>)` oder die Zeile entfaellt.
+Kopf `Belegung: keine (<Grund>)`; die Zeile fehlt nie, denn ohne sie scheitert der Auftrag.
 
 ## Erlaubnisregeln
 
