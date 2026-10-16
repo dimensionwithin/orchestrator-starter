@@ -1,0 +1,14 @@
+# Vorlage fuer die Projektliste der Belegung (anleitungen\belegung.md). Absichtlich leer: du traegst deine Projekte ein.
+# Eine Zeile je Projekt:  <Projektname>  <Ordner>
+#   <Projektname>  klein, nur a-z 0-9 . _ -  (so heisst er in der Zeile "Belegung: repo=..." und im Eintrag)
+#   <Ordner>       Ordner des Projekts auf deinem Rechner (bei Leerzeichen in Anfuehrungszeichen)
+# Ein Arbeitsbaum (git worktree) gehoert zum Projekt seiner Haupt-Arbeitskopie und bekommt keine eigene Zeile.
+# Ein Pseudo-Projekt ohne Ordner (z. B. fuer Downloads, die nie gleichzeitig laufen duerfen) schreibst du so:
+#   <Pseudoname>  -
+# Neue Projekte traegt nur der Nutzer hier ein. Entfernen oder Umbenennen nur, wenn in belegung\ kein Eintrag dafuer liegt.
+#
+# Beispielzeilen (auskommentiert, nicht kopieren):
+# <Projektname>  <Ordner>
+#
+# Erlaubte Orchestrator-Kuerzel (eine Zeile, durch Leerzeichen getrennt):
+# KUERZEL: <Kuerzel> <Kuerzel> <Kuerzel>

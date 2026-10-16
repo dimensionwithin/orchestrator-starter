@@ -1,0 +1,7 @@
+<ZAHL>
+# Vorlage fuer <Warteschlange-Ordner>\parallel.txt. Die erste Zahl der Datei ist die Notbremse: hoechstens so viele
+# Auftraege laufen gleichzeitig (laufende zaehlen mit). Ersetze die erste Zeile durch eine ganze Zahl ab 1, z. B. 3.
+# Empfehlung: bis 6, mehr heizt den Rechner auf und bringt kaum Tempo (siehe anleitungen\unbeaufsichtigt.md).
+# Bleibt <ZAHL> stehen, fehlt die Datei oder ist die Zahl ungueltig, gilt der Vorgabewert deines Programms.
+# Zeilen mit # sind Erklaerung fuer dich; dein Programm liest nur das erste Wort der Datei.
+# Zum Ausprobieren: 1 = immer nur ein Auftrag.
