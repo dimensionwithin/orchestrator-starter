@@ -6,7 +6,7 @@
     {
       "name": "orchestrator-starter",
       "source": "./",
-      "version": "0.2.3",
+      "version": "0.2.4",
       "license": "MIT",
       "description": "Starterpaket fuer die Arbeit mit einem Orchestrator-Chat: Skill, Post-Skript, Marker-Vorlage, Waechter-Mod."
     }

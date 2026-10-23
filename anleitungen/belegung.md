@@ -3,7 +3,7 @@
 Die Belegung verhindert, dass zwei Sitzungen gleichzeitig im selben Projekt arbeiten und sich gegenseitig
 Aenderungen zerstoeren. Sie ist **freiwillig**: Wer nur ein Projekt hat oder nie zwei Sitzungen gleichzeitig laufen
 laesst, braucht sie nicht und schreibt in den Auftragskopf `Belegung: keine (<Grund>)`. Das Plugin bringt nur das
-Konzept und leere Vorlagen mit, kein fertiges Werkzeug und keine Liste von Projekten.
+Konzept und eine Vorlage fuer die Projektliste mit, kein fertiges Werkzeug und keine Liste von Projekten.
 
 ## Das Konzept in fuenf Saetzen
 

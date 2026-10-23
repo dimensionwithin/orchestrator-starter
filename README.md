@@ -19,7 +19,7 @@ plant und prueft, Claude Code fuehrt aus) und feste Dateien fuer alles, was zwis
 |---|---|---|
 | Skill `orchestrator-starter` | `skills/orchestrator-starter/SKILL.md` | Rolle des Orchestrators, Auftragsaufbau, Modell-Routing, Berichte pruefen, Uebergabe |
 | Regeln zum Skill | `skills/orchestrator-starter/regeln/` | `warteschlange.md`, `uebergabe.md`, `unbeaufsichtigt.md` |
-| Waechter-Mod | `hooks/` | zeigt die Lauflaenge einer Sitzung an und erinnert an den Abschluss; verbietet nichts |
+| Waechter-Mod | `hooks/` | zeigt die Lauflaenge einer Sitzung an und erinnert an den Abschluss; verbietet nichts. Er erscheint in `claude plugin details` nicht als Hook (nur in `claude plugin validate`); ob er im echten Chat laedt, ist noch nicht ausprobiert |
 | Skripte | `scripts/` | `post-neu.py` (neue Post an dein Fenster), `marker.py` ("wartet auf dich"-Marker), `test_marker.py`, `LIESMICH.md` |
 | Vorlagen | `vorlagen/` | `BEISPIEL-AUFTRAG.md`, `parallel.txt`, `repos-liste.txt`, `wartet-KUERZEL.txt` |
 | Anleitungen | `anleitungen/` | [Warteschlange einrichten](anleitungen/warteschlange-einrichten.md), [Belegung](anleitungen/belegung.md), [Leitstand](anleitungen/leitstand.md), [Unbeaufsichtigt arbeiten](anleitungen/unbeaufsichtigt.md) |

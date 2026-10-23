@@ -1,6 +1,6 @@
 # Schnellstart: in zehn Schritten zum ersten Auftrag
 
-Etwa zehn Minuten, ohne die Wartezeit der Chats. Jeder Schritt hat einen **Kontrollsatz**: Stimmt er nicht, geh nicht weiter.
+Etwa zehn Minuten, ohne die Wartezeit der Chats (gemessen sind nur die Schritte 1 bis 5; Schritte 6 bis 10 nicht). Jeder Schritt hat einen **Kontrollsatz**: Stimmt er nicht, geh nicht weiter.
 Voraussetzungen und Hintergrund: [README.md](README.md).
 Platzhalter: `<Berichte-Ordner>` (dein gemeinsamer Ordner), `<Kuerzel>` (kurzer Name deines Strangs).
 
