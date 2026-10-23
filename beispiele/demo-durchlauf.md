@@ -21,7 +21,8 @@ Er endet mit "Deine Schritte".
     BERICHT: <Berichte-Ordner>/demo-1-bericht.md, oben Kurzfassung.
     ENDE AUFTRAG demo-1
 
-Pruefung durch den Orchestrator: `tail -1 auftraege/demo-1.md` zeigt `ENDE AUFTRAG demo-1`.
+Pruefung durch den Orchestrator: `tail -1 auftraege/demo-1.md` (Windows PowerShell: `Get-Content auftraege\demo-1.md -Tail 1`)
+zeigt `ENDE AUFTRAG demo-1`.
 
 ## 3. Bericht (`demo-1-bericht.md`, gekuerzt)
     # demo-1 Bericht
@@ -31,6 +32,9 @@ Pruefung durch den Orchestrator: `tail -1 auftraege/demo-1.md` zeigt `ENDE AUFTR
     OFFEN FUER DEN NUTZER: nichts
     Modell: <Modell> / medium — passte
     Suite: test_rechner.py 2 passed (GEMESSEN)
+    Push: nein
+    Deploy: nein
+    Belegung: keine
 
 Der Orchestrator liest nur diese Kurzfassung, vergleicht sie mit WAS GETAN WIRD und prueft stichprobenartig, ob GEMESSEN
 eine Ausgabe nennt.
@@ -49,7 +53,7 @@ Nach der Pruefung setzt der Orchestrator den Marker (Skript einmal nach `<Berich
 
     python <Berichte-Ordner>/setup-post/marker.py demo "demo-2 freigeben?"
 
-Das Skript legt `leitstand/wartet-demo.txt` an (Zeile 1 Uhrzeit, Zeile 2 Kurztext). Ist nichts mehr offen:
+Das Skript legt `leitstand/wartet-demo.txt` an (Zeile 1 Datum und Uhrzeit, Zeile 2 Kurztext). Ist nichts mehr offen:
 
     python <Berichte-Ordner>/setup-post/marker.py demo --keine
 

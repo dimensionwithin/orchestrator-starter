@@ -3,8 +3,9 @@
 Wer mehrere Orchestrator-Chats parallel betreibt, verliert schnell den Ueberblick, in welchem Fenster etwas auf ihn
 wartet. Der Leitstand ist eine einfache Uebersicht darueber. Er ist **optional**; ohne ihn entfallen in `SKILL.md` der
 Abschnitt "Leitstand und Marker" und der Marker am Ende jeder Antwort. Das Plugin bringt keine Oberflaeche mit, nur
-das Dateiformat, den Marker (`scripts\marker.py`) und diese Anleitung. Die Anzeige baust du selbst oder laesst sie
-von Claude Code bauen; sie darf aus nichts anderem bestehen als dem Lesen der Dateien unten.
+das Dateiformat, den Marker (`scripts\marker.py`) und diese Anleitung. Die Anzeige ist **kein fertiges Programm**, sondern
+eine Bauanleitung: Du baust sie selbst oder laesst sie von Claude Code bauen; sie darf aus nichts anderem bestehen als
+dem Lesen der Dateien unten.
 
 ## Was der Leitstand zeigt
 
@@ -40,11 +41,14 @@ als "kein Marker" (nie als "nichts offen"): Eine fehlende Pruefung gilt als nich
        python <Berichte-Ordner>\setup-post\marker.py <Kuerzel> "Kurztext"      etwas wartet auf den Nutzer
        python <Berichte-Ordner>\setup-post\marker.py <Kuerzel> --keine         nichts ist offen
 
-   Es schreibt `<Berichte-Ordner>\leitstand\wartet-<Kuerzel>.txt` und gibt die Datei zur Kontrolle aus.
+   Es schreibt `<Berichte-Ordner>\leitstand\wartet-<Kuerzel>.txt` und gibt die Datei zur Kontrolle aus. Die erste
+   Ausgabezeile nennt den benutzten Berichte-Ordner (`marker: Berichte-Ordner <Pfad>`): Stimmt er nicht, liegt das Skript
+   am falschen Ort (es nimmt den Elternordner seines Ordners).
    - `wartet`: eine Entscheidung, ein Handgriff oder ein Fenster-Schritt des Nutzers ist offen. Der Kurztext sagt in
      einem Satz, welcher.
    - `--keine`: nichts offen, auch wenn Auftraege noch in der Warteschlange laufen.
-   - Beginnt der Text mit `-`, steht `--` davor. Ein neuer Chat nach einem Chatwechsel setzt zuerst `--keine` oder den
+   - Beginnt der Text mit `-`, steht `--` davor (ohne `--` bricht das Skript mit einem Hinweis darauf ab und schreibt
+     nichts). Ein neuer Chat nach einem Chatwechsel setzt zuerst `--keine` oder den
      echten Stand.
 4. **Chat-Adresse (falls dein Chat eine hat):** beim ersten Start und bei jedem Chatwechsel schreibt der Orchestrator
    die Adresse **seiner eigenen** Sitzung als einzige Zeile nach `leitstand\chat-<Kuerzel>.txt` und prueft sie mit `cat`.
@@ -84,13 +88,13 @@ wie "alles erledigt".
 
 ## Kontrolle
 
-1. `python <Berichte-Ordner>\setup-post\marker.py demo "Probe"`: Die Ausgabe nennt den Pfad und zeigt zwei Zeilen
-   (Zeitstempel, "Probe").
+1. `python <Berichte-Ordner>\setup-post\marker.py demo "Probe"`: Die erste Ausgabezeile nennt den Berichte-Ordner, die
+   zweite den Pfad der Datei; danach folgen zwei Zeilen (Zeitstempel, "Probe").
 2. Die Anzeige listet `demo` unter "Wartet auf dich".
 3. `python <Berichte-Ordner>\setup-post\marker.py demo --keine`: `demo` wandert nach "Nichts offen".
 4. Die Datei `wartet-demo.txt` entfernen (Probedatei, die du selbst angelegt hast): `demo` verschwindet oder steht unter
    "Kein Marker", nie unter "Nichts offen".
-5. Die Tests des Markers laufen im Ordner `scripts\`: `python -m unittest` (Linux/macOS: `python3`; zwei Tests, Wegwerfordner).
+5. Die Tests des Markers (und von `post-neu.py`) laufen im Ordner `scripts\`: `python -m unittest` (Linux/macOS: `python3`; sechs Tests, Wegwerfordner).
 
 ## Rueckgaengig
 

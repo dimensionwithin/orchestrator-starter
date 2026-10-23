@@ -3,7 +3,8 @@
 Die Belegung verhindert, dass zwei Sitzungen gleichzeitig im selben Projekt arbeiten und sich gegenseitig
 Aenderungen zerstoeren. Sie ist **freiwillig**: Wer nur ein Projekt hat oder nie zwei Sitzungen gleichzeitig laufen
 laesst, braucht sie nicht und schreibt in den Auftragskopf `Belegung: keine (<Grund>)`. Das Plugin bringt nur das
-Konzept und eine Vorlage fuer die Projektliste mit, kein fertiges Werkzeug und keine Liste von Projekten.
+Konzept und eine Vorlage fuer die Projektliste mit: **kein fertiges Werkzeug**, keine Vorlage der Zusage und keine Liste
+von Projekten. Das Werkzeug unten ist eine Bauanleitung; du baust es selbst oder laesst es von Claude Code bauen.
 
 ## Das Konzept in fuenf Saetzen
 
@@ -21,12 +22,19 @@ nennt und ihre Fassung. Schreib sie einmal in eine Datei `<Berichte-Ordner>\ZUSA
 Fassungsnummer). Aendert sich eine Regel, steigt die Fassung, und alle Beteiligten stimmen zu. Jeder Orchestrator
 liest vor dem Eintragen Zeile 1 und haelt an, wenn die Fassung nicht die ist, die er kennt.
 
+Eine Vorlage fuer die Zusage liegt nicht bei; du schreibst sie selbst. Sie enthaelt mindestens:
+- Zeile 1: Titel und Fassungsnummer, zum Beispiel `# ZUSAGE-belegung.md - Fassung 1`;
+- die fuenf Regeln von oben in deinen Worten;
+- die Namen der beteiligten Orchestratoren (Kuerzel);
+- den Ort des Ordners `belegung\` und der Projektliste `belegung-projekte.txt`;
+- wer einer neuen Fassung zustimmen muss.
+
 ## Voraussetzungen
 
 - Ein Ordner `<Berichte-Ordner>\belegung\` (leer anlegen). Fehlt er, startet nichts mit Projekt: "Pruefung ohne
   Ergebnis" gilt als nicht bestanden.
-- Eine Liste der Projekte, `<Berichte-Ordner>\belegung-projekte.txt`, aus der Vorlage `vorlagen\repos-liste.txt`.
-  Die Vorlage ist leer; **du** traegst deine Projekte ein (Name und Ordner), sonst niemand.
+- Eine Liste der Projekte, `<Berichte-Ordner>\belegung-projekte.txt` (Kopie der Vorlage `vorlagen\repos-liste.txt` unter
+  diesem Namen; ueberall in dieser Anleitung ist diese Kopie gemeint). Die Vorlage ist leer; **du** traegst deine Projekte ein (Name und Ordner), sonst niemand.
 - Eine Liste der erlaubten Orchestrator-Kuerzel (dieselben wie in der Post) und ein Kuerzel fuer dich selbst, wenn du von
   Hand in einem Projekt arbeitest.
 - Ein kleines Werkzeug mit den vier Handgriffen unten. Du kannst es von Claude Code bauen lassen (Python, nur
@@ -86,7 +94,7 @@ als erste Handlung. Beide Seiten pruefen also dieselbe Ordnerstruktur.
 
 ## Kontrolle
 
-1. Projektname in `repos-liste.txt` eingetragen, Ordner `belegung\` vorhanden und leer.
+1. Projektname in `belegung-projekte.txt` eingetragen, Ordner `belegung\` vorhanden und leer.
 2. Zwei Probeaufrufe mit demselben Projekt: `lesen` + `lesen` vertragen sich; `lesen` + `bauen` nicht (zweiter Aufruf
    haelt an und nennt den ersten). Danach beide freigeben; `belegung\` ist wieder leer.
 3. Probe "verwaist": einen Eintrag mit `bis_ca` vor mehr als 2 Stunden von Hand in einem Wegwerf-Berichte-Ordner (nicht

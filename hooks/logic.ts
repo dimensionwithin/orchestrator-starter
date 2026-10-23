@@ -5,7 +5,7 @@ export const HINWEIS_BEI = 100
 export const ABSCHLUSS_AB = 150
 
 export const ABSCHLUSS_TEXT =
-  'Lauflaenge erreicht: Bericht schreiben, Belegung freigeben, Lauf beenden'
+  'Lauflaenge erreicht: Bericht schreiben, ggf. Belegung freigeben, Lauf beenden'
 
 export const statusText = (n: number): string => `Antwort ${n} von ${ABSCHLUSS_AB}`
 

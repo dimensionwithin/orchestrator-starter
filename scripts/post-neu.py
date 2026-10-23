@@ -2,7 +2,8 @@
 """post-neu.py - liefert die neue Post an ein Orchestrator-Fenster und setzt die Lesemarke.
 
 Aufruf: post-neu.py <KUERZEL> [--nur-zeigen] [--stunden N]
-Basisordner = Elternordner dieses Skript-Ordners (enthaelt RUNDSCHREIBEN.md und post/).
+Basisordner = Elternordner dieses Skript-Ordners (enthaelt RUNDSCHREIBEN.md und post/); die erste Ausgabezeile nennt ihn.
+Eine Zeile mit '## ', die kein lesbarer Kopf ist, wird mit Dateiname und Zeilennummer gemeldet; die Lesemarke bleibt dann stehen.
 Nur Standardbibliothek; laeuft unter Windows-Python und Linux-python3.
 """
 import argparse
@@ -56,11 +57,12 @@ def lies_text(pfad):
         return f.read()
 
 
-def eintraege(pfad, quelle):
-    """Zerlegt eine Datei in (zeit, empfaenger_text, kopf_ohne_##, text, quelle)."""
+def eintraege(pfad, quelle, unlesbar=None):
+    """Zerlegt eine Datei in (zeit, empfaenger_text, kopf_ohne_##, text, quelle).
+    Eine Zeile mit '## ', die kein lesbarer Kopf ist, wird als (quelle, zeilennummer, zeile) in 'unlesbar' gesammelt."""
     ergebnis = []
     aktuell = None
-    for zeile in lies_text(pfad).split("\n"):
+    for nummer, zeile in enumerate(lies_text(pfad).split("\n"), start=1):
         zeile = zeile.rstrip("\r")
         if zeile.startswith("## "):
             if aktuell:
@@ -77,6 +79,8 @@ def eintraege(pfad, quelle):
                            "zeilen": [], "quelle": quelle}
             else:
                 aktuell = None
+                if unlesbar is not None:
+                    unlesbar.append((quelle, nummer, zeile))
         elif aktuell is not None:
             aktuell["zeilen"].append(zeile)
     if aktuell:
@@ -130,7 +134,7 @@ def eintrag_id(e):
     return e["quelle"] + "|" + e["kopf"]
 
 
-def sammle(basis, kuerzel, seit, einschliesslich=False):
+def sammle(basis, kuerzel, seit, einschliesslich=False, unlesbar=None):
     quellen = [("RUNDSCHREIBEN.md", os.path.join(basis, "RUNDSCHREIBEN.md"))]
     post = os.path.join(basis, "post")
     if os.path.isdir(post):
@@ -142,7 +146,7 @@ def sammle(basis, kuerzel, seit, einschliesslich=False):
     for name, pfad in quellen:
         if not os.path.isfile(pfad):
             continue
-        for e in eintraege(pfad, name):
+        for e in eintraege(pfad, name, unlesbar):
             if (e["zeit"] >= seit if einschliesslich else e["zeit"] > seit) \
                     and ist_empfaenger(e["empf"], kuerzel):
                 treffer.append(e)
@@ -158,7 +162,8 @@ def lauf(basis, kuerzel, nur_zeigen=False, stunden=24, jetzt=None, ausgabe=None)
     marke, gezeigt = lies_marke_voll(marke_pfad) if os.path.isfile(marke_pfad) else (None, None)
     seit = marke if marke is not None else jetzt - dt.timedelta(hours=stunden)
     # Neue Marke: Eintraege der Marken-Minute mitnehmen und schon Gezeigte ueber die ID aussortieren.
-    kandidaten = sammle(basis, kuerzel, seit, einschliesslich=gezeigt is not None)
+    unlesbar = []
+    kandidaten = sammle(basis, kuerzel, seit, einschliesslich=gezeigt is not None, unlesbar=unlesbar)
     offen = {}
     for eid in gezeigt or ():
         offen[eid] = offen.get(eid, 0) + 1
@@ -171,10 +176,20 @@ def lauf(basis, kuerzel, nur_zeigen=False, stunden=24, jetzt=None, ausgabe=None)
     teile = []
     for e in treffer:
         teile.append("### %s — %s\n%s\n" % (e["quelle"], e["kopf"], e["text"]))
+    for quelle, nummer, zeile in unlesbar:
+        teile.append("post-neu: %s, Zeile %d: Kopfzeile nicht lesbar: %s\n"
+                     "  Erwartet: ## TT.MM.JJJJ HH:MM — an <Kuerzel> — <Betreff> "
+                     "(langer Gedankenstrich —, kein Bindestrich -). Dieser Eintrag wird nicht eingelesen." % (
+                         quelle, nummer, zeile))
+    if unlesbar:
+        marke_text = "unveraendert (%d Kopfzeile(n) nicht lesbar, siehe oben)" % len(unlesbar)
+    elif nur_zeigen:
+        marke_text = "unveraendert (--nur-zeigen)"
+    else:
+        marke_text = jetzt.strftime(MARKE_FORMAT)
     teile.append("post-neu: %d neu fuer %s seit %s; Lesemarke jetzt %s" % (
-        len(treffer), kuerzel, seit.strftime(MARKE_FORMAT),
-        "unveraendert (--nur-zeigen)" if nur_zeigen else jetzt.strftime(MARKE_FORMAT)))
-    if not nur_zeigen:
+        len(treffer), kuerzel, seit.strftime(MARKE_FORMAT), marke_text))
+    if not nur_zeigen and not unlesbar:
         # Alles ab der neuen Marken-Minute (gezeigt jetzt oder schon frueher) merken, damit ein
         # spaeter in dieser Minute geschriebener Eintrag erscheint, ein gezeigter aber nicht doppelt.
         schreibe_marke(marke_pfad, jetzt, [eintrag_id(e) for e in kandidaten if e["zeit"] >= jetzt])
@@ -195,6 +210,7 @@ def main(argv=None):
     except Exception:
         pass
     basis = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    print("post-neu: Berichte-Ordner %s" % basis)
     print(lauf(basis, a.kuerzel.upper(), a.nur_zeigen, a.stunden))
     return 0
 

@@ -14,8 +14,9 @@ Ordner fuer das Programm `<Warteschlange-Ordner>` (z. B. `<Berichte-Ordner>\setu
   nach der Beschreibung unten bauen lassen; es ist nicht Teil des Plugins.
 - Windows: Aufgabenplanung (in jeder Windows-Version dabei) und PowerShell. Linux/macOS: siehe Abschnitt "Alternative".
 - **Die Rechte eines Laufs bestimmst du.** Ein Lauf ohne Rueckfrage tut nur, was deine Claude-Code-Einstellungen
-  erlauben; alles andere wird abgelehnt. Das Plugin liefert dafuer keine Erlaubnisregeln. Lege sie selbst fest und
-  lies sie vor dem ersten Lauf noch einmal durch. Nimm nie einen Schalter, der alle Pruefungen abschaltet, nur damit
+  erlauben; alles andere wird abgelehnt. Das Plugin liefert dafuer keine Erlaubnisregeln. Wie sie aussehen, steht in der
+  Claude-Code-Dokumentation zu Berechtigungen (https://code.claude.com/docs/en/permissions). Lege sie selbst fest und
+  lies sie vor dem ersten Lauf noch einmal durch. Ein Probelauf ohne Regeln lehnt einfach ab. Nimm nie einen Schalter, der alle Pruefungen abschaltet, nur damit
   ein Lauf durchgeht.
 
 ## Schritt 1: Ordner anlegen
@@ -35,7 +36,7 @@ Zielordner schon, bekommt die Datei einen Zeitstempel im Namen.
 ## Schritt 2: Das Programm (Beschreibung zum Selberbauen)
 
 Ein Programm `warteschlange.py` mit einem **Lauf pro Aufruf** (kein Dauerprozess; die Aufgabenplanung ruft es
-regelmaessig). Pfade nimmt es aus Parametern oder liegt im Ordner des Berichte-Ordners, nie fest einkompiliert.
+regelmaessig). Pfade (zum Beispiel den Berichte-Ordner) bekommt es als Parameter, nie fest einkompiliert.
 Ein Lauf:
 
 1. **Pausen-Datei:** Liegt `auftraege\PAUSE`, schreibt der Lauf nur die Statusdatei und startet nichts.
@@ -64,7 +65,7 @@ Ein Lauf:
 7. **Statusdatei** `stand.txt` bei jedem Lauf neu schreiben (atomar: erst temporaer, dann ersetzen): LAEUFT (Kennung,
    Repos, seit wann) und WARTET (Kennung, worauf), dazu eine Zeile, falls eine Pause liegt.
 
-Zwei Laeufe duerfen sich nicht ueberholen: Die Auswahl (Schritt 3 bis 5) laeuft unter einer kurzen exklusiven Sperrdatei
+Zwei Laeufe duerfen sich nicht ueberholen: Die Auswahl (Punkte 3 bis 5 des Laufs oben) laeuft unter einer kurzen exklusiven Sperrdatei
 (`auswahl.lock`, aelter als 2 Minuten gilt als verwaist). Dateien, die mehrere Laeufe beschreiben (Protokoll, Post),
 nur anhaengen bzw. atomar ersetzen. Fuer jedes Verhalten sollte ein Test dasein; lass dir zuerst einen Probemodus
 bauen (`--probe`: zeigt je Auftrag, ob er starten wuerde oder worauf er wartet, und aendert nichts).
@@ -98,7 +99,7 @@ bauen (`--probe`: zeigt je Auftrag, ob er starten wuerde oder worauf er wartet, 
 - Nie ein Fenster schliessen und nie einen Prozess nach Namen beenden: Das trifft auch fremde Python- und
   Claude-Prozesse. Beende hoechstens genau die Prozessnummer aus der `.pid`-Datei des Auftrags.
 
-## Schritt 3: Regelmaessig starten (Windows-Aufgabenplanung)
+## Regelmaessig starten (Windows-Aufgabenplanung)
 
 Die Aufgabe ruft das Programm alle 3 Minuten auf und **erlaubt mehrere Instanzen gleichzeitig**, sonst wartet ein
 neuer Lauf, bis der lange Lauf des vorigen fertig ist. Beispiel in PowerShell (alle Namen und Pfade sind Platzhalter;
@@ -115,8 +116,8 @@ die Cmdlets und Schalter sind geprueft, die Aufgabe selbst ist nicht angelegt wo
   `python.exe` und starte die Aufgabe als "unabhaengig von der Benutzeranmeldung" (Aufgabenplanung, Reiter
   "Allgemein"); dafuer fragt Windows nach deinem Kennwort. Gib es nur dort ein, nie in eine Datei oder einen Auftrag.
 - Das Zeitlimit der Aufgabe muss laenger sein als die laengste erlaubte Laufzeit eines Auftrags.
-- Dieselbe Einrichtung per Oberflaeche: Aufgabenplanung > Aufgabe erstellen > Trigger "Taeglich", wiederholen alle
-  3 Minuten > Aktion "Programm starten" > Reiter Einstellungen: "Falls die Aufgabe bereits ausgefuehrt wird:
+- Dieselbe Einrichtung per Oberflaeche: Aufgabenplanung > Aufgabe erstellen > Trigger "Einmal" (wie `-Once` oben) mit
+  Wiederholung alle 3 Minuten > Aktion "Programm starten" > Reiter Einstellungen: "Falls die Aufgabe bereits ausgefuehrt wird:
   Neue Instanz parallel starten".
 
 ### Alternative: Linux (cron) und macOS (launchd)
@@ -132,7 +133,7 @@ dem Job-Objekt ersetzt du durch eine Prozessgruppe).
 ## Kontrolle
 
 1. Lege einen Probeauftrag an: `vorlagen\BEISPIEL-AUFTRAG.md` kopieren, Platzhalter fuellen, Kennung vergeben, nach
-   `auftraege\bereit\` legen, `tail -1` zeigt `ENDE AUFTRAG <Kennung>`.
+   `auftraege\bereit\` legen, `tail -1` (Windows PowerShell: `Get-Content <Datei> -Tail 1`) zeigt `ENDE AUFTRAG <Kennung>`.
 2. Probemodus des Programms laufen lassen: Der Auftrag steht als "wuerde starten" da, die Dateien haben sich nicht
    bewegt.
 3. Nach hoechstens drei Minuten (+1 Minute Ruhezeit) steht er in `stand.txt` unter LAEUFT, spaeter liegt er in

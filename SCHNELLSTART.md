@@ -1,8 +1,10 @@
 # Schnellstart: in zehn Schritten zum ersten Auftrag
 
 Etwa zehn Minuten, ohne die Wartezeit der Chats (gemessen sind nur die Schritte 1 bis 5; Schritte 6 bis 10 nicht). Jeder Schritt hat einen **Kontrollsatz**: Stimmt er nicht, geh nicht weiter.
-Voraussetzungen und Hintergrund: [README.md](README.md).
-Platzhalter: `<Berichte-Ordner>` (dein gemeinsamer Ordner), `<Kuerzel>` (kurzer Name deines Strangs).
+Voraussetzungen und Hintergrund: [README.md](README.md); was Strang, Berichte-Ordner, Auftrag und die anderen Begriffe
+bedeuten, steht dort unter [Begriffe](README.md#begriffe).
+Platzhalter: `<Berichte-Ordner>` (dein gemeinsamer Ordner), `<Kuerzel>` (kurzer Name deines Strangs, also eines
+abgegrenzten Arbeitsgebiets), `<Arbeitsordner>` (der Projektordner, in dem ein Auftrag arbeiten soll).
 
 1. **Claude Code und Python pruefen.** `claude --version` und `python --version` (unter Linux/macOS `python3`).
    Kontrolle: Beide Befehle geben eine Versionsnummer aus, Python beginnt mit 3.
@@ -32,12 +34,15 @@ Platzhalter: `<Berichte-Ordner>` (dein gemeinsamer Ordner), `<Kuerzel>` (kurzer 
    Kontrolle: Der Chat nennt dein Kuerzel und fragt, falls noetig, einmal nach dem Berichte-Ordner.
 7. **Ziel beschreiben,** in zwei, drei Saetzen, und um einen kleinen ersten Auftrag bitten.
    Kontrolle: Der Chat schlaegt Modell und Effort mit Begruendung vor und legt `auftraege/<Kennung>.md` an
-   (mit Warteschlange: `auftraege/bereit/<Kennung>.md`). Willst du den Ablauf erst ohne Chat sehen, kopiere
-   `vorlagen/BEISPIEL-AUFTRAG.md` dorthin und fuell die Platzhalter.
-8. **Auftrag pruefen:** Letzte Zeile der Datei lesen.
+   (nur wenn du dir selbst eine Warteschlange gebaut hast: `auftraege/bereit/<Kennung>.md`; das Paket bringt keine mit).
+   Willst du den Ablauf erst ohne Chat sehen, kopiere `vorlagen/BEISPIEL-AUFTRAG.md` dorthin und fuell die Platzhalter.
+   Die Vorlage liegt im Plugin-Ordner aus Schritt 5, dort unter `vorlagen\` neben `scripts\`, oder im Klon.
+8. **Auftrag pruefen:** Letzte Zeile der Datei lesen (PowerShell: `Get-Content <Datei> -Tail 1`; sonst `tail -1 <Datei>`).
    Kontrolle: Sie lautet `ENDE AUFTRAG <Kennung>`.
-9. **Auftrag ausfuehren:** neue Claude-Code-Sitzung im Arbeitsordner, Text:
-   `Auftrag <Kennung>: lies <Berichte-Ordner>/auftraege/<Kennung>.md und fuehre ihn aus.` (Modell und Effort wie im Kopf.)
+9. **Auftrag ausfuehren:** neue Claude-Code-Sitzung im `<Arbeitsordner>`, gestartet mit
+   `claude --model <Modell> --effort <Effort>` (Modell und Effort wie im Auftragskopf; beides im Chat umzustellen ist nicht
+   ausprobiert). Text:
+   `Auftrag <Kennung>: lies <Berichte-Ordner>/auftraege/<Kennung>.md und fuehre ihn aus.`
    Der Auftrag schreibt in den Berichte-Ordner: lege ihn im Arbeitsordner an oder gib ihn mit `--add-dir` frei. Ob Claude
    Code beim Schreiben ausserhalb des Arbeitsordners nachfragt oder ablehnt, ist noch nicht ausprobiert.
    Kontrolle: Es entsteht `<Berichte-Ordner>/<Kennung>-bericht.md` mit `## Kurzfassung` oben.
@@ -53,6 +58,6 @@ Ein durchgespieltes Beispiel: [beispiele/demo-durchlauf.md](beispiele/demo-durch
 
 In einem Klon des Repositories (`git clone https://github.com/dimensionwithin/orchestrator-starter`):
 
-- Skripte: im Ordner `scripts/` `python -m unittest` (Linux/macOS `python3`). Kontrolle: `Ran 2 tests` und `OK`.
+- Skripte: im Ordner `scripts/` `python -m unittest` (Linux/macOS `python3`). Kontrolle: `Ran 6 tests` und `OK`.
 - Manifest: `claude plugin validate <Ordner-des-Klons>`. Kontrolle: `Validation passed`.
-- Waechter-Mod: `claude plugin test <Ordner-des-Klons>`. Kontrolle: `6 pass, 0 fail`.
+- Waechter-Mod: `claude plugin test <Ordner-des-Klons>`. Kontrolle: `6 pass` und `0 fail` (die Ausgabe zeigt beides auf zwei Zeilen).

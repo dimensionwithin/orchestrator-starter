@@ -11,7 +11,8 @@ liegt (Skript in <Berichte-Ordner>/setup-post/marker.py, wie post-neu.py).
 Geschrieben wird <Berichte-Ordner>/leitstand/wartet-<Kuerzel>.txt, UTF-8, nur LF:
   Zeile 1: JJJJ-MM-TT HH:MM (Ortszeit des Rechners, vom Skript gesetzt, nie von Hand)
   Zeile 2: der Kurztext, oder das Wort "keine"
-Zum Schluss wird die Datei zur Kontrolle ausgegeben. Nur Python-Standardbibliothek.
+Die erste Ausgabezeile nennt den benutzten Berichte-Ordner; zum Schluss wird die Datei zur Kontrolle ausgegeben.
+Beginnt der Kurztext mit '-', steht '--' davor. Nur Python-Standardbibliothek.
 """
 import argparse
 import datetime
@@ -62,12 +63,19 @@ def main(argv=None):
     ap.add_argument("kuerzel")
     ap.add_argument("text", nargs="?", default="", help="Kurztext; beginnt er mit '-', steht -- davor")
     ap.add_argument("--keine", action="store_true", help="nichts ist offen")
-    a = ap.parse_args(argv)
+    a, uebrig = ap.parse_known_args(argv)
+    if uebrig:
+        print(f"marker: unbekannte Angabe: {' '.join(uebrig)}\n"
+              "marker: Beginnt der Kurztext mit '-', setze '--' davor, z. B.  marker.py <Kuerzel> -- \"-Text\"",
+              file=sys.stderr)
+        return 2
     if a.keine == bool(a.text.strip()):
         print("marker: entweder Kurztext oder --keine angeben", file=sys.stderr)
         return 1
+    ordner = berichte_ordner(a.berichte)
+    print(f"marker: Berichte-Ordner {ordner}")
     try:
-        ziel = setze_marker(berichte_ordner(a.berichte), a.kuerzel, KEINE if a.keine else a.text)
+        ziel = setze_marker(ordner, a.kuerzel, KEINE if a.keine else a.text)
     except (ValueError, OSError) as e:
         print(f"marker: {e}", file=sys.stderr)
         return 1

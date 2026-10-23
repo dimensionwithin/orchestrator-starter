@@ -29,7 +29,7 @@ seine Anleitung, rate nicht.
 ## Pflichten fuer einen Auftrag in `bereit\`
 
 - Dateiname `<Kennung>.md`, erste Zeile `Auftrag <Kennung> — …`, letzte nicht leere Zeile `ENDE AUFTRAG <Kennung>`.
-  Nach dem Schreiben mit `tail -1` pruefen. Fehlt die letzte Zeile, scheitert der Auftrag sofort.
+  Nach dem Schreiben mit `tail -1` pruefen (Windows PowerShell: `Get-Content <Datei> -Tail 1`). Fehlt die letzte Zeile, scheitert der Auftrag sofort.
 - Kopf mit `MODELL:` und `EFFORT:`, dazu `ORCHESTRATOR: <Kuerzel>` fuer die Rueckmeldung. Wo euer Programm es
   verlangt, auch die Zeile `Belegung:`; ohne Belegung `Belegung: keine (<Grund>)`, nie weglassen.
 - Alles entschieden, keine Anmeldung, kein Handgriff, keine Rueckfrage. Sonst Start von Hand.
