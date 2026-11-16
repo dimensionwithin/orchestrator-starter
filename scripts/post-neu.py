@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """post-neu.py - liefert die neue Post an ein Orchestrator-Fenster und setzt die Lesemarke.
 
-Aufruf: post-neu.py <KUERZEL> [--nur-zeigen] [--stunden N]
+Aufruf: post-neu.py <KUERZEL> [--nur-zeigen] [--stunden N] [--zaehlen]
+--zaehlen nennt nur die Zahl der neuen Eintraege (Zeile 2) und laesst die Lesemarke unveraendert.
 Basisordner = Elternordner dieses Skript-Ordners (enthaelt RUNDSCHREIBEN.md und post/); die erste Ausgabezeile nennt ihn.
 Eine Zeile mit '## ', die kein lesbarer Kopf ist, wird mit Dateiname und Zeilennummer gemeldet; die Lesemarke bleibt dann stehen.
 Nur Standardbibliothek; laeuft unter Windows-Python und Linux-python3.
@@ -154,10 +155,8 @@ def sammle(basis, kuerzel, seit, einschliesslich=False, unlesbar=None):
     return treffer
 
 
-def lauf(basis, kuerzel, nur_zeigen=False, stunden=24, jetzt=None, ausgabe=None):
-    """Gibt die Ausgabe als Text zurueck (und setzt die Lesemarke, ausser nur_zeigen)."""
-    jetzt = jetzt or berlin_jetzt()
-    jetzt = jetzt.replace(second=0, microsecond=0)
+def neue_post(basis, kuerzel, stunden, jetzt):
+    """Gibt (marke_pfad, seit, kandidaten, treffer, unlesbar) zurueck; liest nur, schreibt nichts."""
     marke_pfad = os.path.join(basis, "post", "gelesen", kuerzel + ".txt")
     marke, gezeigt = lies_marke_voll(marke_pfad) if os.path.isfile(marke_pfad) else (None, None)
     seit = marke if marke is not None else jetzt - dt.timedelta(hours=stunden)
@@ -173,6 +172,24 @@ def lauf(basis, kuerzel, nur_zeigen=False, stunden=24, jetzt=None, ausgabe=None)
             offen[eintrag_id(e)] -= 1
         else:
             treffer.append(e)
+    return marke_pfad, seit, kandidaten, treffer, unlesbar
+
+
+def zaehlen(basis, kuerzel, stunden=24, jetzt=None):
+    """--zaehlen: nennt nur die Zahl der neuen Eintraege; zeigt keinen Text und schreibt keine Lesemarke."""
+    jetzt = (jetzt or berlin_jetzt()).replace(second=0, microsecond=0)
+    _, _, _, treffer, unlesbar = neue_post(basis, kuerzel, stunden, jetzt)
+    zeilen = ["post-neu: %d neu fuer %s (nur gezaehlt, Lesemarke unveraendert)" % (len(treffer), kuerzel)]
+    if unlesbar:
+        zeilen.append("post-neu: %d Kopfzeile(n) nicht lesbar; ohne --zaehlen aufrufen, um sie zu sehen" % len(unlesbar))
+    return "\n".join(zeilen)
+
+
+def lauf(basis, kuerzel, nur_zeigen=False, stunden=24, jetzt=None, ausgabe=None):
+    """Gibt die Ausgabe als Text zurueck (und setzt die Lesemarke, ausser nur_zeigen)."""
+    jetzt = jetzt or berlin_jetzt()
+    jetzt = jetzt.replace(second=0, microsecond=0)
+    marke_pfad, seit, kandidaten, treffer, unlesbar = neue_post(basis, kuerzel, stunden, jetzt)
     teile = []
     for e in treffer:
         teile.append("### %s — %s\n%s\n" % (e["quelle"], e["kopf"], e["text"]))
@@ -201,6 +218,8 @@ def main(argv=None):
     p.add_argument("kuerzel")
     p.add_argument("--nur-zeigen", action="store_true")
     p.add_argument("--stunden", type=float, default=24)
+    p.add_argument("--zaehlen", action="store_true",
+                   help="nur die Zahl der neuen Eintraege nennen; kein Text, Lesemarke unveraendert")
     a = p.parse_args(argv)
     if not re.fullmatch(r"[A-Za-z0-9_-]+", a.kuerzel):
         print("post-neu: ungueltiges Kuerzel", file=sys.stderr)
@@ -211,7 +230,10 @@ def main(argv=None):
         pass
     basis = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("post-neu: Berichte-Ordner %s" % basis)
-    print(lauf(basis, a.kuerzel.upper(), a.nur_zeigen, a.stunden))
+    if a.zaehlen:
+        print(zaehlen(basis, a.kuerzel.upper(), a.stunden))
+    else:
+        print(lauf(basis, a.kuerzel.upper(), a.nur_zeigen, a.stunden))
     return 0
 
 

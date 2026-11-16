@@ -41,6 +41,12 @@ seine Anleitung, rate nicht.
   Hochstufen des Modells nur bei Scheitern am Koennen, nicht bei Umgebungsfehlern.
 - Lies ein Scheitern nach: Post der Warteschlange, dann `head -25` des Berichts (falls es einen gibt) oder die
   Grund-Datei in `gescheitert\`.
+- **Nach dem Einreihen** sagst du dem Nutzer genau diesen Satz: "Der Auftrag liegt in der Warteschlange. Ich merke das Ende
+  nicht von selbst. Schreib 'Post', dann sehe ich nach." Die Warteschlange legt nur Post ab und weckt keinen Chat; "du wirst
+  benachrichtigt" oder "ich melde mich, sobald er fertig ist" ist falsch.
+- **Fertigmeldung:** Liest euer Programm die Zeile `Ergebnis:` der Kurzfassung (fertig, teilweise, angehalten), kann es den
+  Betreff der Post danach richten (`<Kennung> erledigt — fertig | teilweise | ANGEHALTEN | Ergebnis nicht lesbar`). Darum
+  beginnt die Zeile immer mit dem Schluesselwort (`regeln\grundregeln-auftraege.md`, Abschnitt Bericht).
 
 ## Optional: Belegung
 

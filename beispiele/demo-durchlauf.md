@@ -2,6 +2,10 @@
 
 Alles hier ist erfunden. Ordner: `<Berichte-Ordner>`, Kuerzel: `demo`.
 
+## 0. Demo anlegen
+Aus einem Klon oder dem Plugin-Ordner: `python scripts\demo-anlegen.py <Berichte-Ordner> <Arbeitsordner>`. Danach liegt der Auftrag
+`auftraege\demo-1.md` bereit; weiter mit Schritt 8 des Schnellstarts.
+
 ## 1. Chat-Start
 Du oeffnest einen neuen Chat und rufst den Skill `orchestrator-starter` auf. Du schreibst:
 "Strang demo: Ich will ein kleines Rechenskript `rechner.py` mit Tests."
@@ -14,8 +18,9 @@ Er endet mit "Deine Schritte".
     ORCHESTRATOR: demo
     Belegung: keine (Uebung, ein einziger Nutzer)
     DEPLOY: kein Deploy
+    Grundregeln: <Berichte-Ordner>\regeln\grundregeln-auftraege.md gelten
 
-    WARUM: Kleines Skript als Uebung.
+    WARUM: ENDZUSTAND (Sicht des Nutzers): Im Arbeitsordner liegt rechner.py mit add und sub, und zwei Tests laufen gruen.
     REPO-ZUGRIFF: SCHREIBEND nur <Arbeitsordner>/rechner.py und <Arbeitsordner>/test_rechner.py. Alles andere KEIN ZUGRIFF.
     WAS GETAN WIRD: 1. rechner.py mit add und sub. 2. Zwei Tests, vorher rot. 3. Tests ausfuehren.
     BERICHT: <Berichte-Ordner>/demo-1-bericht.md, oben Kurzfassung.
@@ -27,9 +32,11 @@ zeigt `ENDE AUFTRAG demo-1`.
 ## 3. Bericht (`demo-1-bericht.md`, gekuerzt)
     # demo-1 Bericht
     ## Kurzfassung
-    Ergebnis: fertig, 2 Tests gruen.
+    Ergebnis: fertig, rechner.py mit add und sub, 2 Tests gruen.
     EINSPRUCH: keiner
     OFFEN FUER DEN NUTZER: nichts
+    TEST FUER DEN NUTZER: keiner
+    FUER DEN ORCHESTRATOR: demo-2 Doku als naechstes
     Modell: <Modell> / medium — passte
     Suite: test_rechner.py 2 passed (GEMESSEN)
     Push: nein

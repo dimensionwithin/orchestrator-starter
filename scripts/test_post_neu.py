@@ -35,6 +35,15 @@ def schreibe_post(basis, kopf):
                                    encoding="utf-8", newline="\n")
 
 
+def schreibe_zwei_eintraege(basis):
+    """Zwei lesbare Eintraege an B (Datum in der Zukunft, also neuer als jede Rueckschau)."""
+    post = pathlib.Path(basis) / "post"
+    post.mkdir(exist_ok=True)
+    (post / "VON-A.md").write_text(
+        "# Post von A\n\n---\n\n## 01.01.2030 12:05 — an B — Zweiter\n\nHallo B, zwei\n\n"
+        "## 01.01.2030 12:00 — an B — Erster\n\nHallo B, eins\n", encoding="utf-8", newline="\n")
+
+
 class PostNeuTest(unittest.TestCase):
     def test_kopf_mit_bindestrich_wird_gemeldet_und_die_marke_nicht_gesetzt(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -64,6 +73,33 @@ class PostNeuTest(unittest.TestCase):
             self.assertEqual(r.returncode, 0, r.stderr)
             erste = r.stdout.splitlines()[0]
             self.assertIn(str(falschort), erste)
+
+    def test_zaehlen_nennt_anzahl(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            basis = pathlib.Path(tmp).resolve() / "berichte"
+            skript = kopiere_skript(basis)
+            schreibe_zwei_eintraege(basis)
+            r = lauf(skript, "B", "--zaehlen")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            zeilen = r.stdout.splitlines()
+            self.assertEqual(zeilen[0], "post-neu: Berichte-Ordner %s" % basis)
+            self.assertEqual(zeilen[1], "post-neu: 2 neu fuer B (nur gezaehlt, Lesemarke unveraendert)")
+            self.assertEqual(len(zeilen), 2, r.stdout)          # kein Eintragstext
+            self.assertNotIn("Hallo B", r.stdout)
+
+    def test_zaehlen_setzt_keine_lesemarke(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            basis = pathlib.Path(tmp).resolve() / "berichte"
+            skript = kopiere_skript(basis)
+            schreibe_zwei_eintraege(basis)
+            marke = basis / "post" / "gelesen" / "B.txt"
+            r = lauf(skript, "B", "--zaehlen")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertFalse(marke.exists(), "--zaehlen darf keine Lesemarke schreiben")
+            # Danach liest der normale Aufruf dieselben zwei Eintraege noch.
+            r = lauf(skript, "B")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("post-neu: 2 neu fuer B", r.stdout)
 
 
 if __name__ == "__main__":

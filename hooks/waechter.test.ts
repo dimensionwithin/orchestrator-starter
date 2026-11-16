@@ -33,6 +33,11 @@ test('Abschluss-Mahnung erst ab Antwort 150', () => {
 
 // --- durch die echte Schicht: Engine-Hooks mit dem Mod darueber ---
 
+// Unter dem Mod steht keine Engine: die Hooks des Tests antworten an ihrer Stelle.
+// Ein Aufruf auf `$` (ui.status, ui.toast, ui.log) wird mit `{ value }` beantwortet,
+// fuer diese drei ist der Wert leer (Claude Code 2.1.323, `OpValueOf`: void).
+const leer = { value: undefined }
+
 const stepInput = (index: number) => ({
   turnId: 't1',
   index,
@@ -46,12 +51,13 @@ test('Engine: zaehlt Schritte, zeigt Status, Toast bei 100, Hinweis ab 150, verb
 
   on('ui.status', (_$, e) => {
     statuses.push(e.text)
-    return null as never
+    return leer
   })
   on('ui.toast', (_$, e) => {
     toasts.push(e.text)
-    return null as never
+    return leer
   })
+  on('ui.log', () => leer)
   // Die Engine unter dem Mod: ein Schritt ohne Antwort, ein Tool-Aufruf ohne Wirkung.
   on('turn.step', async function* (_$, e) {
     return { turnId: e.turnId, index: e.index, answer: '', toolUses: [], stopReason: null, usage: null }
@@ -100,8 +106,9 @@ test('Engine: Schritte eines Subagenten zaehlen nicht mit', async ($, on) => {
   const statuses: (string | undefined)[] = []
   on('ui.status', (_$, e) => {
     statuses.push(e.text)
-    return null as never
+    return leer
   })
+  on('ui.log', () => leer)
   on('turn.step', async function* (_$, e) {
     return { turnId: e.turnId, index: e.index, answer: '', toolUses: [], stopReason: null, usage: null }
   })

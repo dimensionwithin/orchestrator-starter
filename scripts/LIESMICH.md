@@ -28,6 +28,10 @@ Linux/macOS: `python3 <BERICHTE>/setup-post/post-neu.py <Kuerzel>`
   dieser Minute. So geht ein Eintrag in genau der Minute der Marke nicht verloren und kommt nicht doppelt.
   Alte Marken (nur Zeile 1) bleiben gueltig.
 - `--nur-zeigen`: ausgeben, aber Lesemarke nicht aendern. `--stunden N`: Rueckschau, wenn die Lesemarke fehlt (Vorgabe 24).
+- `--zaehlen`: nur zaehlen. Zeile 1 bleibt `post-neu: Berichte-Ordner <Pfad>`, Zeile 2 lautet
+  `post-neu: <n> neu fuer <KUERZEL> (nur gezaehlt, Lesemarke unveraendert)`; kein Text der Eintraege, Rueckgabewert 0, die
+  Lesemarke wird nicht geschrieben. So sieht ein Chat in Antworten ohne Postabfrage, ob etwas wartet, ohne es als gelesen
+  zu markieren (Regel im Skill, Abschnitt "Post zwischen Orchestratoren").
 - Letzte Zeile: `post-neu: <n> neu fuer <KUERZEL> seit <Marke>; Lesemarke jetzt <neu>`. Bei 0 steht (nach der Zeile mit dem
   Berichte-Ordner) nur sie da.
 - Eine Zeile, die mit `## ` beginnt, aber kein lesbarer Kopf ist (zum Beispiel mit normalem Bindestrich `-` statt des langen
@@ -46,8 +50,8 @@ Eintraege in dieser Zeit schreiben, sonst erscheinen sie zu frueh oder zu spaet.
 
 ## Tests
 
-Fuer `post-neu.py` liegt `test_post_neu.py` bei (zwei Tests: Kopfzeile mit Bindestrich, Ausgabe des Berichte-Ordners), fuer
-`marker.py` `test_marker.py`; zusammen sechs Tests mit `python -m unittest` (Linux/macOS: `python3`) im Ordner `scripts\`. Eine
+Fuer `post-neu.py` liegt `test_post_neu.py` bei (vier Tests: Kopfzeile mit Bindestrich, Ausgabe des Berichte-Ordners,
+`--zaehlen` nennt die Anzahl, `--zaehlen` setzt keine Lesemarke), fuer `marker.py` `test_marker.py`; zusammen acht Tests mit `python -m unittest` (Linux/macOS: `python3`) im Ordner `scripts\`. Eine
 kurze Probe von Hand mit Platzhalter-Ordner: Wegwerfordner anlegen, darin `setup-post\post-neu.py` und `post\VON-A.md` mit einem Eintrag
 `## 01.01.2030 12:00 — an B — Probe`, dann `python setup-post\post-neu.py B --nur-zeigen` im Wegwerfordner ausfuehren.
 

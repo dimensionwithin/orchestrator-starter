@@ -7,7 +7,9 @@ Upload zu bestimmter Zeit), und die ZEITSPERRE im Auftrag.
 Ist der Nutzer weg (er sagt es, oder es kommt nichts mehr), gilt fuer deine Auftraege:
 - **Plane fuer die ganze Zeit.** Mehrere Auftraege nacheinander, oder ein Auftrag mit mehreren entschiedenen Teilen
   ("Nachtpaket"). Ein Teil, der nicht vom vorigen abhaengt, laeuft weiter, auch wenn der vorige scheitert.
-- **Nur Entschiedenes.** Nicht getan, sondern im Bericht unter OFFEN FUER DEN NUTZER: Veroeffentlichen, Deploy, Loeschen
+- **Nur Entschiedenes.** Eine Empfehlung, die du im vereinbarten Rahmen umgesetzt und gemeldet hast, gilt als
+  entschieden; die Fragen, die nur der Nutzer entscheidet (SKILL.md, "Wer entscheidet"), nie. Nicht getan, sondern im
+  Bericht unter OFFEN FUER DEN NUTZER: Veroeffentlichen, Deploy, Loeschen
   echter Daten, Geld ausserhalb des vereinbarten Rahmens, Sicherheitseinstellungen, eine neue Lesart. Push nur, wenn
   der Auftrag ihn ausdruecklich erlaubt.
 - **Sauber anhalten** bei Sicherheitseinstellungen, fremden Prozessen oder Daten, Dateien ausserhalb des Schreibumfangs

@@ -24,7 +24,10 @@ abgegrenzten Arbeitsgebiets), `<Arbeitsordner>` (der Projektordner, in dem ein A
    (`<Claude-Konfigordner>` ist meist `.claude` in deinem Benutzerordner; der Pfad ist nur in einer isolierten
    Konfiguration nachgemessen). Die Versionsnummer steht im Pfad und aendert sich bei einem Update. Alternativ lade die
    beiden Dateien aus dem Ordner `scripts` des Repositories `https://github.com/dimensionwithin/orchestrator-starter` herunter.
-   Kontrolle: `<Berichte-Ordner>/setup-post/` enthaelt beide Dateien.
+   Zusaetzlich den Ordner `regeln` im `<Berichte-Ordner>` anlegen und `skills/orchestrator-starter/regeln/grundregeln-auftraege.md`
+   (aus demselben Plugin-Ordner oder Repository) unveraendert hineinkopieren; Auftraege verweisen mit der Zeile
+   `Grundregeln: <Berichte-Ordner>\regeln\grundregeln-auftraege.md gelten` darauf.
+   Kontrolle: `<Berichte-Ordner>/setup-post/` enthaelt beide Skripte, `<Berichte-Ordner>/regeln/` enthaelt `grundregeln-auftraege.md`.
 6. **Orchestrator-Chat starten:** neue Claude-Code-Sitzung (nicht die, in der spaeter Auftraege laufen), Skill aufrufen,
    `<Kuerzel>` nennen (z. B. `demo`). Der Skill heisst `orchestrator-starter` im Plugin `orchestrator-starter`; die Form
    `/orchestrator-starter:orchestrator-starter` folgt dem Schema `<Plugin>:<Skill>` und ist noch nicht ausprobiert. Ob
@@ -37,6 +40,7 @@ abgegrenzten Arbeitsgebiets), `<Arbeitsordner>` (der Projektordner, in dem ein A
    (nur wenn du dir selbst eine Warteschlange gebaut hast: `auftraege/bereit/<Kennung>.md`; das Paket bringt keine mit).
    Willst du den Ablauf erst ohne Chat sehen, kopiere `vorlagen/BEISPIEL-AUFTRAG.md` dorthin und fuell die Platzhalter.
    Die Vorlage liegt im Plugin-Ordner aus Schritt 5, dort unter `vorlagen\` neben `scripts\`, oder im Klon.
+   Zum Ausprobieren ohne eigenes Ziel: `scripts\demo-anlegen.py` (siehe beispiele/demo-durchlauf.md, Abschnitt 0).
 8. **Auftrag pruefen:** Letzte Zeile der Datei lesen (PowerShell: `Get-Content <Datei> -Tail 1`; sonst `tail -1 <Datei>`).
    Kontrolle: Sie lautet `ENDE AUFTRAG <Kennung>`.
 9. **Auftrag ausfuehren:** neue Claude-Code-Sitzung im `<Arbeitsordner>`, gestartet mit
@@ -58,6 +62,6 @@ Ein durchgespieltes Beispiel: [beispiele/demo-durchlauf.md](beispiele/demo-durch
 
 In einem Klon des Repositories (`git clone https://github.com/dimensionwithin/orchestrator-starter`):
 
-- Skripte: im Ordner `scripts/` `python -m unittest` (Linux/macOS `python3`). Kontrolle: `Ran 6 tests` und `OK`.
+- Skripte: im Ordner `scripts/` `python -m unittest` (Linux/macOS `python3`). Kontrolle: `Ran 12 tests` und `OK`.
 - Manifest: `claude plugin validate <Ordner-des-Klons>`. Kontrolle: `Validation passed`.
 - Waechter-Mod: `claude plugin test <Ordner-des-Klons>`. Kontrolle: `6 pass` und `0 fail` (die Ausgabe zeigt beides auf zwei Zeilen).

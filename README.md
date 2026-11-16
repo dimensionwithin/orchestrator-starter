@@ -7,7 +7,7 @@ selbst starten), **Post** zwischen den Orchestratoren und einen **Leitstand** (e
 gerade auf dich wartet; die Anzeige baust du selbst). Was die fett gedruckten Woerter bedeuten, steht unter
 [Begriffe](#begriffe).
 
-Version 0.2.5. Autor `DimensionWithin`, Lizenz MIT (siehe LICENSE).
+Version 0.3.0. Autor `DimensionWithin`, Lizenz MIT (siehe LICENSE).
 
 ## Fuer wen
 
@@ -36,13 +36,13 @@ Sprache: Alle Texte des Pakets sind deutsch (Umlaute als ae, oe, ue geschrieben)
 | Teil | Ort im Paket | Zweck |
 |---|---|---|
 | Skill `orchestrator-starter` | `skills/orchestrator-starter/SKILL.md` | Rolle des Orchestrators, Auftragsaufbau, Modell-Routing, Berichte pruefen, Uebergabe |
-| Regeln zum Skill | `skills/orchestrator-starter/regeln/` | `warteschlange.md`, `uebergabe.md`, `unbeaufsichtigt.md` |
+| Regeln zum Skill | `skills/orchestrator-starter/regeln/` | `warteschlange.md`, `uebergabe.md`, `unbeaufsichtigt.md`, `ergebnis-statt-stueckelung.md` (Auftraege bis zum nutzbaren Ergebnis schneiden), `plan-auftrag.md` (wann und wie ein Plan vor dem Bau), `grundregeln-auftraege.md` (Verbote, EINSPRUCH, Berichtsformat; wird nach `<Berichte-Ordner>\regeln\` kopiert) |
 | Waechter-Mod (Mod: siehe [Begriffe](#begriffe)) | `hooks/` | zeigt die Lauflaenge einer Sitzung an und erinnert an den Abschluss; verbietet nichts. Er erscheint in `claude plugin details` nicht als Hook (nur in `claude plugin validate`); ob er im echten Chat laedt, ist noch nicht ausprobiert |
-| Skripte | `scripts/` | `post-neu.py` (neue Post an dein Fenster), `marker.py` ("wartet auf dich"-Marker), `test_post_neu.py`, `test_marker.py`, `LIESMICH.md` |
+| Skripte | `scripts/` | `post-neu.py` (neue Post an dein Fenster; `--zaehlen` nennt nur die Zahl), `marker.py` ("wartet auf dich"-Marker), `demo-anlegen.py` (legt den Beispielstrang `demo` an), `test_post_neu.py`, `test_marker.py`, `test_demo_anlegen.py`, `LIESMICH.md` |
 | Vorlagen | `vorlagen/` | `BEISPIEL-AUFTRAG.md`, `parallel.txt`, `repos-liste.txt` (Vorlage der Projektliste; deine Kopie heisst `belegung-projekte.txt`, siehe [Belegung](anleitungen/belegung.md)), `wartet-KUERZEL.txt` (Formatvorlage fuer den Marker; `marker.py` erzeugt die Datei selbst, du kopierst sie nicht) |
 | Anleitungen | `anleitungen/` | [Warteschlange einrichten](anleitungen/warteschlange-einrichten.md), [Belegung](anleitungen/belegung.md), [Leitstand](anleitungen/leitstand.md), [Unbeaufsichtigt arbeiten](anleitungen/unbeaufsichtigt.md) |
 | Schnellstart | [SCHNELLSTART.md](SCHNELLSTART.md) | in zehn Schritten bis zum ersten Auftrag |
-| Beispiel | [beispiele/demo-durchlauf.md](beispiele/demo-durchlauf.md) | ein durchgespielter Strang `demo` |
+| Beispiel | [beispiele/demo-durchlauf.md](beispiele/demo-durchlauf.md), `beispiele/demo/` | ein durchgespielter Strang `demo`; unter `beispiele/demo/` die fertigen Dateien (Auftrag, Uebergabe, erwarteter Bericht) zum Nachspielen |
 
 Zu `unbeaufsichtigt` gehoert zusaetzlich die Regel unter `skills/orchestrator-starter/regeln/unbeaufsichtigt.md`.
 
@@ -101,9 +101,9 @@ Die Nutzung erfolgt ohne Gewaehr, wie in der Lizenz beschrieben.
 
 ## Zeitzone
 
-Die Zeitzone Berlin ist fest in `scripts/post-neu.py` eingebaut: Die Funktion `berlin_jetzt()` (Zeile 38 bis 51) liefert die
-Ortszeit, in ihr steht `ZoneInfo("Europe/Berlin")` (Zeile 44). Wer eine andere Zeitzone braucht, aendert diese eine Zeile.
-Die Rueckfallregel `berlin_regel()` (Zeile 28) gilt nur, falls `zoneinfo` fehlt, und muesste dann ebenfalls angepasst werden.
+Die Zeitzone Berlin ist fest in `scripts/post-neu.py` eingebaut: Die Funktion `berlin_jetzt()` (Zeile 40 bis 53) liefert die
+Ortszeit, in ihr steht `ZoneInfo("Europe/Berlin")` (Zeile 46). Wer eine andere Zeitzone braucht, aendert diese eine Zeile.
+Die Rueckfallregel `berlin_regel()` (Zeile 30) gilt nur, falls `zoneinfo` fehlt, und muesste dann ebenfalls angepasst werden.
 
 ## Bekannte Grenzen
 

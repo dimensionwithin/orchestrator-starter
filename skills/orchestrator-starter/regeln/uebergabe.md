@@ -8,11 +8,19 @@ Fassung nennen, nicht abschreiben. Keine Schluessel, Tokens oder Passwoerter in 
 Die Uebergabe hat zwei Teile. Kern `UEBERGABE-<Kuerzel>.md`, hoechstens etwa 5 KB (Punkte 1 bis 4 unten). Anhang
 `UEBERGABE-<Kuerzel>-anhang.md` fuer die Punkte 5 und 6, "Was gilt" und aeltere Entscheidungen; nur bei Bedarf lesen.
 
+**Anhang hoechstens 40 KB.** Ist er groesser, lagerst du beim naechsten Nachfuehren aus: Entschiedenes, das aelter als 14 Tage
+ist, und erledigte Stolpersteine kommen nach `<BERICHTE>\archiv\UEBERGABE-<Kuerzel>-anhang-<JJJJ-MM-TT>.md` (neue Datei; gibt
+es den Tag schon, `-HHMM` anhaengen; nichts ueberschreiben, nichts loeschen). Im Anhang bleibt davon nur der Pfad dieser
+Datei. Was noch gilt und juenger ist, bleibt im Anhang.
+
 **Aufbau:**
-1. Wer du bist: Strang, Kuerzel, Repositories, Ordner, strangeigene Regeln (Pfad, Fassung).
+1. Wer du bist: Strang, Kuerzel, Repositories, Ordner, strangeigene Regeln (Pfad, Fassung). Dazu die Zeile
+   `Ergebnis statt Stueckelung: regeln\ergebnis-statt-stueckelung.md gilt (ENDZUSTAND in jedem Auftrag, ein Auftrag bis zum
+   nutzbaren Ergebnis).`
 2. Laufend: Auftraege (Kennung, Ziel, seit wann, was als Naechstes geprueft wird).
 3. Offen: nummeriert, das Naechste zuerst; besprochene, nicht entschiedene Fragen gehoeren dazu.
-4. Entschieden: Entscheidungen des Nutzers der letzten Tage woertlich mit Datum (aeltere nur mit Verweis).
+4. Entschieden: Entscheidungen des Nutzers der letzten Tage woertlich mit Datum (aeltere nur mit Verweis); dazu deine
+   umgesetzten Empfehlungen, als solche gekennzeichnet.
 5. Wichtige Dateien: Berichte, Plaene, Freigaben mit Pfad.
 6. Stolpersteine, auch Lehren aus der Modell-Zeile der Berichte (zu schwach / groesser als noetig).
 
@@ -20,7 +28,12 @@ Die Uebergabe hat zwei Teile. Kern `UEBERGABE-<Kuerzel>.md`, hoechstens etwa 5 K
 Feierabend macht oder weg ist. Erledigtes faellt aus dem Kern heraus.
 
 Post liest jeder Chat (falls Post eingesetzt wird) mit `post-neu.py <Kuerzel>` (siehe SKILL.md); das Skript fuehrt die
-Lesemarke, nicht die Uebergabe.
+Lesemarke, nicht die Uebergabe. Gelesen wird nur im neuen Chat, beim Wort "Post" und wenn ein Ergebnis erwartet wird; in
+allen anderen Antworten nur `post-neu.py <Kuerzel> --zaehlen` (nennt die Zahl, Lesemarke unveraendert). Post-Eintraege:
+ein Eintrag je Thema, Fragen gesammelt am Ende.
+
+**Wann wechseln:** im Fenster Antwort 10 bis 15 (SKILL.md, "Uebergabe und Chatwechsel"); ab Antwort 10 Kern und Anhang
+nachfuehren, ab Antwort 15 keine neue Arbeit mehr, nur noch die Wechsel-Antwort.
 Zugriff auf `<BERICHTE>`: Fehlt er im neuen Chat, gilt der Abschnitt "Der Berichte-Ordner" der SKILL.md; bis er
 freigegeben ist, liest oder schreibt der Chat nichts auf dem Rechner.
 
